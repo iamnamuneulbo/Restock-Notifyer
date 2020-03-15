@@ -10,15 +10,15 @@
 <head>
 <meta charset="UTF-8">
 <!-- <meta http-equiv="refresh" content="10" /> -->
-<title>Sample</title>
+<title>Restock Notifyer</title>
 <script src="http://code.jquery.com/jquery-latest.js"></script>
 <link rel="stylesheet"
 	href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
 	integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
 	crossorigin="anonymous">
-<link rel="stylesheet" href="./main.css" type="text/css">
+<link rel="stylesheet" href="./css/main.css" type="text/css">
 
-<script src="./main.js"></script>
+<script src="./js/main.js"></script>
 </head>
 <body onload="load()">
 	<h2 class="text-center mb-3">재입고 알림 서비스</h2>
@@ -27,7 +27,7 @@
 		<div class="input-group-prepend">
 			<span class="input-group-text" id="basic-addon1">URL</span>
 		</div>
-		<input type="text" class="form-control" placeholder="상품 URL 입력"
+		<input type="url" class="form-control" placeholder="상품 URL 입력"
 			aria-label="Username" aria-describedby="basic-addon1" id="url-input">
 		<div class="input-group-append">
 			<button class="btn btn-outline-secondary" type="button"
