@@ -1,7 +1,8 @@
 <template>
-  <div>
-    <InsertProduct />
-    <ProductTable @select="selectProducts" />
+  <div class="page">
+    <InsertProduct v-on:addProduct="addProduct"/>
+    <ProductTable :products="products" />
+    <!-- <ProductTable @select="selectProducts" /> -->
   </div>
 </template>
 
@@ -18,7 +19,32 @@ export default {
   },
   data() {
     return {
-      products: []
+      products: [
+        {
+          prdId: 1,
+          prdImg:
+            "https://shop-phinf.pstatic.net/20170927_252/thedama_1506475853176vgSQN_JPEG/29783012795655265_-283706787.jpg?type=m450",
+          prdUrl: "https://smartstore.naver.com/thedama_com/products/376093294",
+          prdName: "1[더담아] 소량판매/택배봉투/택배비닐/LDPE/HDPE/폴리백",
+          dialog: false
+        },
+        {
+          prdId: 2,
+          prdImg:
+            "https://shop-phinf.pstatic.net/20170927_252/thedama_1506475853176vgSQN_JPEG/29783012795655265_-283706787.jpg?type=m450",
+          prdUrl: "https://smartstore.naver.com/thedama_com/products/376093294",
+          prdName: "2[더담아] 소량판매/택배봉투/택배비닐/LDPE/HDPE/폴리백",
+          dialog: false
+        },
+        {
+          prdId: 3,
+          prdImg:
+            "https://shop-phinf.pstatic.net/20170927_252/thedama_1506475853176vgSQN_JPEG/29783012795655265_-283706787.jpg?type=m450",
+          prdUrl: "https://smartstore.naver.com/thedama_com/products/376093294",
+          prdName: "3[더담아] 소량판매/택배봉투/택배비닐/LDPE/HDPE/폴리백",
+          dialog: false
+        },
+      ]
     };
   },
   methods: {
@@ -26,7 +52,17 @@ export default {
     //   instance
     //     .get("/product")
     //     .then(response => (this.products = response.data));
-    // }
+    // },
+    addProduct: function(inputUrl) {
+      this.products.push({
+          prdId: 4,
+          prdImg:
+            "https://shop-phinf.pstatic.net/20170927_252/thedama_1506475853176vgSQN_JPEG/29783012795655265_-283706787.jpg?type=m450",
+          prdUrl: inputUrl,
+          prdName: "4[더담아] 소량판매/택배봉투/택배비닐/LDPE/HDPE/폴리백",
+          dialog: false
+        });
+    }
   }
   // created() {
   //   instance.get("/product").then(response => (this.products = response.data));
@@ -54,4 +90,9 @@ export default {
 </script>
 
 <style scoped>
+.page {
+  margin-left: 10%;
+  margin-right: 10%;
+  margin-bottom: 5%;
+}
 </style>

@@ -10,35 +10,8 @@
         </tr>
       </thead>
       <tbody id="product-rows">
-        <tr>
-          <th scope="row">1</th>
-          <td>
-            <img
-              src="https://shop-phinf.pstatic.net/20170927_252/thedama_1506475853176vgSQN_JPEG/29783012795655265_-283706787.jpg?type=m450"
-              width="100px"
-            />
-          </td>
-          <td>
-            <a
-              href="https://smartstore.naver.com/thedama_com/products/376093294"
-              target="_blank"
-            >[더담아] 소량판매/택배봉투/택배비닐/LDPE/HDPE/폴리백</a>
-          </td>
-          <td>
-            <v-btn
-              icon
-              color="red"
-              href="#"
-              data-toggle="modal"
-              data-target="#modalDelete"
-              @click="requestRemove"
-            >
-              <v-icon>mdi-delete</v-icon>
-            </v-btn>
-          </td>
-        </tr>
-        <tr v-for="(product, index) in foundedproducts" :key="index">
-          <td>{{ product.prdId }}</td>
+        <tr v-for="(product, index) in products" :key="index">
+          <th scope="row">{{ product.prdId }}</th>
           <td>
             <img :src="product.prdImg" width="100px" />
           </td>
@@ -46,7 +19,35 @@
             <a :href="product.prdUrl" target="_blank">{{ product.prdName }}</a>
           </td>
           <td>
-            <a href="#" @click="requestRemove(product.prdId)">삭제</a>
+            <v-row justify="center">
+              <v-dialog v-model="product.dialog" max-width="290">
+                <template v-slot:activator="{ on }">
+                  <v-btn
+                    icon
+                    color="red"
+                    href="#"
+                    data-toggle="modal"
+                    data-target="#modalDelete"
+                    v-on="on"
+                  >
+                    <v-icon>mdi-delete</v-icon>
+                  </v-btn>
+                </template>
+                <v-card>
+                  <v-card-title class="headline">삭제하시겠습니까?</v-card-title>
+                  <v-card-text>{{ product.prdName }}</v-card-text>
+                  <v-card-actions>
+                    <v-spacer></v-spacer>
+                    <v-btn color="blue-grey lighten-2" text @click="product.dialog = false">No</v-btn>
+                    <v-btn
+                      color="light-blue"
+                      text
+                      @click="dialog = false; requestRemove(product.prdId);"
+                    >Yes</v-btn>
+                  </v-card-actions>
+                </v-card>
+              </v-dialog>
+            </v-row>
           </td>
         </tr>
       </tbody>
@@ -57,24 +58,35 @@
 <script>
 export default {
   name: "ProductTable",
-  props: {},
+  props: ['products'],
   data() {
     return {
       deletedProduct: {
         prdId: ""
-      }
+      },
+      dialog: false,
     };
   },
   methods: {
-    addProduct: function() {}
+    
     // requestRemove: function(removedId) {
     //   instance.delete("/product/" + removedId).then(() => {
     //     this.$emit("select");
     //   });
     // },
+    
+  },
+  watch: {
+    // products: function() {
+    //   this.addProduct(this.products);
+    // }
   }
 };
 </script>
 
 <style scoped>
+a {
+  text-decoration: none;
+  color: black;
+}
 </style>
