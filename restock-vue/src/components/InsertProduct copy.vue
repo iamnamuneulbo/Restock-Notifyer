@@ -24,7 +24,6 @@
 </template>
 
 <script>
-
 export default {
   name: "InsertProduct",
   data() {
@@ -32,7 +31,7 @@ export default {
       newProduct: {
         userId: "lsk",
         prdUrl: ""
-      },
+      }
     };
   },
   methods: {
@@ -45,12 +44,11 @@ export default {
         // instance.post("/product", this.newProduct).then(() => {
         //   this.$emit("insert");
         // });
-      }
-      else  {
+      } else {
         alert("필수값: URL");
       }
-    },
-  },
+    }
+  }
 };
 </script>
 

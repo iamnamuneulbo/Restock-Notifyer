@@ -36,13 +36,14 @@
         </tr>
         <tr v-for="(product, index) in foundedproducts" :key="index">
           <td>{{ product.prdId }}</td>
-          <td><img :src="product.prdImg" width="100px" /></td>
-          <td><a :href="product.prdUrl" target="_blank">{{ product.prdName }}</a></td>
           <td>
-            <a
-              href="#"
-              @click="requestRemove(product.prdId)"
-            >삭제</a>
+            <img :src="product.prdImg" width="100px" />
+          </td>
+          <td>
+            <a :href="product.prdUrl" target="_blank">{{ product.prdName }}</a>
+          </td>
+          <td>
+            <a href="#" @click="requestRemove(product.prdId)">삭제</a>
           </td>
         </tr>
       </tbody>

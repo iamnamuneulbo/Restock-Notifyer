@@ -57,7 +57,7 @@
     "{{ product.prdUrl }}",
     "{{ product.prdImg }}"
   );
-          </script> -->
+          </script>-->
         </tr>
       </tbody>
     </table>

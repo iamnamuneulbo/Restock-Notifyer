@@ -27,7 +27,7 @@ export default {
     //     .get("/product")
     //     .then(response => (this.products = response.data));
     // }
-  },
+  }
   // created() {
   //   instance.get("/product").then(response => (this.products = response.data));
   //   this.$store.commit("getGoodsModel", this.$route.params.goodsCode);

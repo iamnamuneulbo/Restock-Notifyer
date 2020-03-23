@@ -2,7 +2,6 @@
   <v-form>
     <v-container>
       <v-row>
-
         <v-col cols="12" sm="11">
           <v-text-field
             label="상품 URL 입력"
@@ -11,18 +10,16 @@
             v-model="newProduct.prdUrl"
           ></v-text-field>
         </v-col>
-        
+
         <v-col cols="12" sm="1">
-         <v-btn class="mr-4" @click="requestInsert">추가</v-btn>
+          <v-btn class="mr-4" @click="requestInsert">추가</v-btn>
         </v-col>
-        
       </v-row>
     </v-container>
   </v-form>
 </template>
 
 <script>
-
 export default {
   name: "InsertProduct",
   data() {
@@ -30,7 +27,7 @@ export default {
       newProduct: {
         userId: "lsk",
         prdUrl: ""
-      },
+      }
     };
   },
   methods: {
@@ -43,12 +40,11 @@ export default {
         // instance.post("/product", this.newProduct).then(() => {
         //   this.$emit("insert");
         // });
-      }
-      else  {
+      } else {
         alert("필수값: URL");
       }
-    },
-  },
+    }
+  }
 };
 </script>
 
