@@ -19,7 +19,7 @@
             hint="www.example.com"
             persistent-hint
             v-model="newProduct.prdUrl"
-          ></v-text-field>
+          @keydown.enter="requestInsert"></v-text-field>
         </v-col>
         <v-col cols="12" sm="1">
           <v-btn class="mr-4" @click="requestInsert">추가</v-btn>
