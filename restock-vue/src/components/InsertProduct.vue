@@ -14,12 +14,14 @@
       <v-row align="center" justify="center">
         <v-spacer />
         <v-col cols="12" sm="9">
-          <v-text-field clearable
+          <v-text-field
+            clearable
             label="상품 URL 입력"
             hint="www.example.com"
             persistent-hint
             v-model="newProduct.prdUrl"
-          @keydown.enter="requestInsert"></v-text-field>
+            @keydown.enter="requestInsert"
+          ></v-text-field>
         </v-col>
         <v-col cols="12" sm="1">
           <v-btn class="mr-4" @click="requestInsert">추가</v-btn>
@@ -42,7 +44,7 @@ export default {
         prdUrl: ""
       },
       products: [],
-      errorAlert: false,
+      errorAlert: false
     };
   },
   methods: {
@@ -52,7 +54,7 @@ export default {
         this.newProduct.prdUrl !== undefined &&
         this.newProduct.prdUrl !== ""
       ) {
-        this.$emit('addProduct', this.newProduct.prdUrl);
+        this.$emit("addProduct", this.newProduct.prdUrl);
         this.newProduct.prdUrl = "";
         // instance.post("/product", this.newProduct).then(() => {
         //   this.$emit("insert");
