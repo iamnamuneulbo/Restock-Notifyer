@@ -6,17 +6,15 @@
 </template>
 
 <script>
-
 export default {
   name: "Header",
-  components: {
-  },
+  components: {}
 };
 </script>
 
 <style scoped>
 hr {
-	margin-top: 1.5rem;
-	margin-bottom: 1.5rem;
+  margin-top: 1.5rem;
+  margin-bottom: 1.5rem;
 }
 </style>

@@ -1,16 +1,16 @@
 <template>
   <div class="home">
-    <MainPage/>
+    <MainPage />
   </div>
 </template>
 
 <script>
-import MainPage from '../components/MainPage'
+import MainPage from "../components/MainPage";
 
 export default {
-  name: 'MainPage',
+  name: "MainPage",
   components: {
     MainPage
   }
-}
+};
 </script>

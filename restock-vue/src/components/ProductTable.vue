@@ -25,13 +25,16 @@
             >[더담아] 소량판매/택배봉투/택배비닐/LDPE/HDPE/폴리백</a>
           </td>
           <td>
-            <a
+            <v-btn
+              icon
+              color="red"
               href="#"
-              class="btn btn-danger btn-circle"
               data-toggle="modal"
               data-target="#modalDelete"
               @click="requestRemove"
-            >삭제</a>
+            >
+              <v-icon>mdi-delete</v-icon>
+            </v-btn>
           </td>
         </tr>
         <tr v-for="(product, index) in foundedproducts" :key="index">

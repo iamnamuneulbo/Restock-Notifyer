@@ -1,60 +1,65 @@
 <template>
-  <v-app>
-    <v-app-bar
-      app
-      color="primary"
-      dark
-    >
-      <div class="d-flex align-center">
-        <v-img
-          alt="Vuetify Logo"
-          class="shrink mr-2"
-          contain
-          src="https://cdn.vuetifyjs.com/images/logos/vuetify-logo-dark.png"
-          transition="scale-transition"
-          width="40"
-        />
+  <v-app id="inspire">
+    <v-navigation-drawer v-model="drawer" app>
+      <v-list dense>
+        <v-list-item link href="/">
+          <v-list-item-action>
+            <v-icon>mdi-home</v-icon>
+          </v-list-item-action>
+          <v-list-item-content>
+            <v-list-item-title>Home</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+        <v-list-item link href="/#/login">
+          <v-list-item-action>
+            <v-icon>mdi-login</v-icon>
+          </v-list-item-action>
+          <v-list-item-content>
+            <v-list-item-title>Login</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+      </v-list>
+    </v-navigation-drawer>
 
-        <v-img
-          alt="Vuetify Name"
-          class="shrink mt-1 hidden-sm-and-down"
-          contain
-          min-width="100"
-          src="https://cdn.vuetifyjs.com/images/logos/vuetify-name-dark.png"
-          width="100"
-        />
-      </div>
-
-      <v-spacer></v-spacer>
-
-      <v-btn
-        href="https://github.com/vuetifyjs/vuetify/releases/latest"
-        target="_blank"
-        text
-      >
-        <span class="mr-2">Latest Release</span>
-        <v-icon>mdi-open-in-new</v-icon>
-      </v-btn>
+    <v-app-bar app color="indigo" dark>
+      <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
+      <v-toolbar-title>재입고 알림 서비스</v-toolbar-title>
     </v-app-bar>
 
     <v-content>
-      <MainPage/>
+      <v-container fluid>
+        <v-row align="center" justify="center">
+          <v-col>
+            <MainPage />
+          </v-col>
+        </v-row>
+      </v-container>
     </v-content>
+    <v-footer color="indigo" app>
+      <span class="white--text">&copy; 2020</span>
+    </v-footer>
   </v-app>
 </template>
 
 <script>
-import MainPage from './components/MainPage';
+import MainPage from "./components/MainPage";
 
 export default {
-  name: 'App',
+  name: "App",
 
   components: {
-    MainPage,
+    MainPage
   },
-
+  props: {
+    source: String
+  },
   data: () => ({
-    //
+    drawer: null
   }),
+  methods: {
+    goToLogin() {
+      this.$router.push('/login');
+    },
+  }
 };
 </script>
