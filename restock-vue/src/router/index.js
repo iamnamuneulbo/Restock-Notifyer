@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Home from '../views/Home'
+import MainPage from "../components/MainPage";
 import LoginForm from '../components/LoginForm'
 
 Vue.use(VueRouter)
@@ -8,8 +8,8 @@ Vue.use(VueRouter)
 const routes = [
     {
         path: '/',
-        name: 'Home',
-        component: Home
+        name: 'MainPage',
+        component: MainPage
     },
     {
         path: '/about',

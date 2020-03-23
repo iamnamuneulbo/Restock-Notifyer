@@ -30,7 +30,7 @@
       <v-container fluid>
         <v-row align="center" justify="center">
           <v-col>
-            <MainPage />
+            <router-view />
           </v-col>
         </v-row>
       </v-container>
@@ -42,13 +42,11 @@
 </template>
 
 <script>
-import MainPage from "./components/MainPage";
 
 export default {
   name: "App",
 
   components: {
-    MainPage
   },
   props: {
     source: String
