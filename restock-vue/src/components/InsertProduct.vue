@@ -76,9 +76,9 @@ export default {
     },
     requestInsert: function() {
       if (
-        this.prdUrl == null &&
-        this.prdUrl == undefined &&
-        this.prdUrl == ""
+        this.prdUrl === null ||
+        this.prdUrl === undefined ||
+        this.prdUrl === ""
       ) {
         this.blankErrorAlert = true;
         setTimeout(() => {
