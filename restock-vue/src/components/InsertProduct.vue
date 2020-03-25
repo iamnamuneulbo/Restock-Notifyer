@@ -13,20 +13,18 @@
       </v-row>
 
       <v-row align="center" justify="center">
-        <v-spacer />
-        <v-col cols="12" sm="9">
+        <v-col cols="9" sm="11">
           <v-text-field
             id="url-input"
             clearable
-            filled
             label="상품 URL 입력"
             hint="www.example.com"
             persistent-hint
-            v-model="newProduct.prdUrl"
+            v-model="prdUrl"
             @keydown.enter="requestInsert"
           ></v-text-field>
         </v-col>
-        <v-col cols="12" sm="1">
+        <v-col cols="2" sm="1">
           <v-btn
             class="mx-2 mr-4"
             fab
@@ -38,7 +36,6 @@
             <v-icon dark>mdi-plus</v-icon>
           </v-btn>
         </v-col>
-        <v-spacer />
       </v-row>
 
       <v-row style="height: 56px"></v-row>
@@ -51,10 +48,7 @@ export default {
   name: "InsertProduct",
   data() {
     return {
-      newProduct: {
-        userId: "lsk",
-        prdUrl: ""
-      },
+      prdUrl: null,
       products: [],
       blankErrorAlert: false,
       urlErrorAlert: false
@@ -63,12 +57,11 @@ export default {
   methods: {
     requestPermission: function() {
       let urlInput = document.getElementById("url-input");
-      console.log(urlInput);
       Notification.requestPermission(function(result) {
         // 요청 거절
         if (result === "denied") {
           // 입력폼 비활성화
-          urlInput.setAttribute("disabled", "true");
+          urlInput.setAttribute("disabled", "");
 
           return;
         }
@@ -76,7 +69,6 @@ export default {
         else {
           // 입력폼 활성화
           urlInput.removeAttribute("disabled");
-          urlInput.removeAttribute("filled");
 
           return;
         }
@@ -84,37 +76,33 @@ export default {
     },
     requestInsert: function() {
       if (
-        this.newProduct.prdUrl == null &&
-        this.newProduct.prdUrl == undefined &&
-        this.newProduct.prdUrl == ""
+        this.prdUrl == null &&
+        this.prdUrl == undefined &&
+        this.prdUrl == ""
       ) {
         this.blankErrorAlert = true;
         setTimeout(() => {
           this.blankErrorAlert = false;
         }, 2000);
-      } else if (!this.isValidUrl(this.newProduct.prdUrl)) {
+      } else if (!this.isValidUrl(this.prdUrl)) {
         this.urlErrorAlert = true;
         setTimeout(() => {
           this.urlErrorAlert = false;
         }, 2000);
       } else {
-        this.$emit("insertProduct", this.newProduct.prdUrl);
-        this.newProduct.prdUrl = "";
+        this.$emit("insertProduct", this.prdUrl);
+        this.prdUrl = null;
         // instance.post("/product", this.newProduct).then(() => {
         //   this.$emit("insert");
         // });
       }
     },
-    isValidUrl: string => {
-      try {
-        new URL(string);
-        return true;
-      } catch (_) {
-        return false;
-      }
+    isValidUrl(string) {
+      var pattern = new RegExp("^(http|https)://", "i");
+      return !!pattern.test(string);
     }
   },
-  beforeCreate() {
+  mounted() {
     this.requestPermission();
   }
 };
