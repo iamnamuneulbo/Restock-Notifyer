@@ -1,6 +1,6 @@
 <template>
   <div class="page">
-    <InsertProduct v-on:insertProduct="insertProduct" @insertProduct="getInsertedUrl" />
+    <InsertProduct v-on:insertProduct="insertProduct" />
     <ProductTable :products="products" />
     <!-- <ProductTable @select="selectProducts" /> -->
   </div>
@@ -45,7 +45,7 @@ export default {
           dialog: false
         }
       ],
-      insertedUrl: ""
+      insertedUrl: null,
     };
   },
   methods: {
@@ -54,7 +54,8 @@ export default {
     //     .get("/product")
     //     .then(response => (this.products = response.data));
     // },
-    insertProduct: function() {
+    insertProduct: function(url) {
+      this.insertedUrl = url;
       this.products.push({
         prdId: 4,
         prdImg:
@@ -63,13 +64,7 @@ export default {
         prdName: this.insertedUrl,
         dialog: false
       });
-
-      console.log(this.products);
-      console.log(this.insertedUrl);
     },
-    getInsertedUrl: function(url) {
-      this.insertedUrl = url;
-    }
   }
   // created: {
   // instance.get("/product").then(response => (this.products = response.data));
@@ -98,8 +93,8 @@ export default {
 
 <style scoped>
 .page {
-  margin-left: 10%;
+  /* margin-left: 10%;
   margin-right: 10%;
-  margin-bottom: 5%;
+  margin-bottom: 5%; */
 }
 </style>
