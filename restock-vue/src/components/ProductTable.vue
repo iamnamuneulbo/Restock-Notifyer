@@ -42,7 +42,7 @@
                     <v-btn
                       color="light-blue"
                       text
-                      @click="dialog = false; requestRemove(product.prdId);"
+                      @click="removeEvent(product)"
                     >Yes</v-btn>
                   </v-card-actions>
                 </v-card>
@@ -68,12 +68,12 @@ export default {
     };
   },
   methods: {
-    
-    // requestRemove: function(removedId) {
-    //   instance.delete("/product/" + removedId).then(() => {
-    //     this.$emit("select");
-    //   });
-    // },
+    removeEvent: function (product) {
+      product.dialog = false;
+      let index = this.products.indexOf(product);
+      this.products.splice(index, 1);
+      //delete 요청
+    },
     
   },
   watch: {

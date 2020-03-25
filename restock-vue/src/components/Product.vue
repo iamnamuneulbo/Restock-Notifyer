@@ -1,6 +1,6 @@
 <template>
   <div class="page">
-    <InsertProduct v-on:addProduct="addProduct"/>
+    <InsertProduct v-on:insertProduct="insertProduct" @insertProduct="getInsertedUrl" />
     <ProductTable :products="products" />
     <!-- <ProductTable @select="selectProducts" /> -->
   </div>
@@ -43,8 +43,9 @@ export default {
           prdUrl: "https://smartstore.naver.com/thedama_com/products/376093294",
           prdName: "3[더담아] 소량판매/택배봉투/택배비닐/LDPE/HDPE/폴리백",
           dialog: false
-        },
-      ]
+        }
+      ],
+      insertedUrl: ""
     };
   },
   methods: {
@@ -53,21 +54,27 @@ export default {
     //     .get("/product")
     //     .then(response => (this.products = response.data));
     // },
-    addProduct: function(inputUrl) {
+    insertProduct: function() {
       this.products.push({
-          prdId: 4,
-          prdImg:
-            "https://shop-phinf.pstatic.net/20170927_252/thedama_1506475853176vgSQN_JPEG/29783012795655265_-283706787.jpg?type=m450",
-          prdUrl: inputUrl,
-          prdName: "4[더담아] 소량판매/택배봉투/택배비닐/LDPE/HDPE/폴리백",
-          dialog: false
-        });
+        prdId: 4,
+        prdImg:
+          "https://shop-phinf.pstatic.net/20170927_252/thedama_1506475853176vgSQN_JPEG/29783012795655265_-283706787.jpg?type=m450",
+        prdUrl: this.insertedUrl,
+        prdName: this.insertedUrl,
+        dialog: false
+      });
+
+      console.log(this.products);
+      console.log(this.insertedUrl);
+    },
+    getInsertedUrl: function(url) {
+      this.insertedUrl = url;
     }
   }
-  // created() {
-  //   instance.get("/product").then(response => (this.products = response.data));
-  //   this.$store.commit("getGoodsModel", this.$route.params.goodsCode);
-  //   this.$store.commit("loadCommentByGoodsCode", this.$route.params.goodsCode);
+  // created: {
+  // instance.get("/product").then(response => (this.products = response.data));
+  // this.$store.commit("getGoodsModel", this.$route.params.goodsCode);
+  // this.$store.commit("loadCommentByGoodsCode", this.$route.params.goodsCode);
   // },
   // computed: {
   //   getGoodsData() {
