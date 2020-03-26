@@ -39,11 +39,7 @@
                   <v-card-actions>
                     <v-spacer></v-spacer>
                     <v-btn color="blue-grey lighten-2" text @click="product.dialog = false">No</v-btn>
-                    <v-btn
-                      color="light-blue"
-                      text
-                      @click="removeEvent(product)"
-                    >Yes</v-btn>
+                    <v-btn color="light-blue" text @click="removeEvent(product)">Yes</v-btn>
                   </v-card-actions>
                 </v-card>
               </v-dialog>
@@ -58,23 +54,22 @@
 <script>
 export default {
   name: "ProductTable",
-  props: ['products'],
+  props: ["products"],
   data() {
     return {
       deletedProduct: {
         prdId: ""
       },
-      dialog: false,
+      dialog: false
     };
   },
   methods: {
-    removeEvent: function (product) {
+    removeEvent: function(product) {
       product.dialog = false;
       let index = this.products.indexOf(product);
       this.products.splice(index, 1);
       //delete 요청
-    },
-    
+    }
   },
   watch: {
     // products: function() {

@@ -10,6 +10,7 @@
             <v-list-item-title>Home</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
+
         <v-list-item link @click="goToLoginPage">
           <v-list-item-action>
             <v-icon>mdi-login</v-icon>
@@ -18,6 +19,7 @@
             <v-list-item-title>Login</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
+
       </v-list>
     </v-navigation-drawer>
 
@@ -60,22 +62,23 @@ export default {
   data: () => ({
     windowHeight: 0,
     drawer: false,
+    notificationIcon: "mdi-bell"
   }),
   mounted() {
     this.getWindowHeight();
   },
   methods: {
-    getWindowHeight() {
+    getWindowHeight: function() {
       this.windowHeight = window.innerHeight;
     },
-    goToMainPage() {
+    goToMainPage: function() {
       this.drawer = false;
       this.$router.push("/");
     },
-    goToLoginPage() {
+    goToLoginPage: function() {
       this.drawer = false;
       this.$router.push("/login");
-    }
+    },
   }
 };
 </script>

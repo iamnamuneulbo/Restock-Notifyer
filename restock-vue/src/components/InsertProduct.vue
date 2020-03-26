@@ -7,6 +7,7 @@
           <v-slide-y-transition>
             <v-alert type="warning" v-if="blankErrorAlert">필수값: URL</v-alert>
             <v-alert type="warning" v-if="urlErrorAlert">유효하지 않은 URL 입력</v-alert>
+            <v-alert type="error" v-if="permissionErrorAlert">알림 권한 획득 실패</v-alert>
           </v-slide-y-transition>
         </v-col>
         <v-spacer />
@@ -50,6 +51,7 @@ export default {
     return {
       prdUrl: null,
       products: [],
+      permissionErrorAlert: false,
       blankErrorAlert: false,
       urlErrorAlert: false
     };
@@ -57,20 +59,15 @@ export default {
   methods: {
     requestPermission: function() {
       let urlInput = document.getElementById("url-input");
-      Notification.requestPermission(function(result) {
-        // 요청 거절
+      Notification.requestPermission(result => {
         if (result === "denied") {
-          // 입력폼 비활성화
           urlInput.setAttribute("disabled", "");
-
-          return;
-        }
-        // 요청 허용
-        else {
-          // 입력폼 활성화
+          this.permissionErrorAlert = true;
+          setTimeout(() => {
+            this.permissionErrorAlert = false;
+          }, 2000);
+        } else {
           urlInput.removeAttribute("disabled");
-
-          return;
         }
       });
     },
@@ -97,7 +94,7 @@ export default {
         // });
       }
     },
-    isValidUrl(string) {
+    isValidUrl: function(string) {
       let httpPattern = new RegExp("^(http|https)://", "i");
       let urlPattern = new RegExp(
         "^(https?:\\/\\/)?" + // protocol
