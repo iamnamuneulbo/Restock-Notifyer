@@ -1,6 +1,6 @@
 <template>
   <v-row align="center" justify="center" class="ma-12">
-    <v-col cols="12" sm="6" md="3">
+    <v-col cols="12" xs="10" sm="6" md="6" lg="3" xl="3">
       <v-card class="elevation-12">
         <v-toolbar color="light-blue lighten-1" dark flat>
           <v-toolbar-title>Login</v-toolbar-title>
