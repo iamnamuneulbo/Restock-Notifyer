@@ -7,7 +7,7 @@
           <v-slide-y-transition>
             <v-alert type="warning" v-if="blankErrorAlert">필수값: URL</v-alert>
             <v-alert type="warning" v-if="urlErrorAlert">유효하지 않은 URL 입력</v-alert>
-            <v-alert type="error" v-if="permissionErrorAlert">알림 권한 획득 실패</v-alert>
+            <v-alert type="error" v-if="permissionErrorAlert">알림 권한 허용 필요</v-alert>
           </v-slide-y-transition>
         </v-col>
         <v-spacer />
