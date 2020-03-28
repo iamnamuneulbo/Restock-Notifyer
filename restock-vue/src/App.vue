@@ -11,7 +11,7 @@
           </v-list-item-content>
         </v-list-item>
 
-        <v-list-item link @click="logout" v-if="authStatus">
+        <v-list-item link @click="logout" v-if="userStatus">
           <v-list-item-action>
             <v-icon>mdi-logout</v-icon>
           </v-list-item-action>
@@ -47,7 +47,7 @@
         <v-container fluid>
           <v-row align="center" justify="center">
             <v-col>
-              <router-view v-on:userInfo="userInfo" />
+              <router-view v-on:setUserEmail="setUserEmail" :userEmail="userEmail"/>
             </v-col>
           </v-row>
         </v-container>
@@ -73,16 +73,24 @@ export default {
     source: String
   },
   data: () => ({
-    userEmail: "xxx@gmail.com",
     windowHeight: 0,
     drawer: false,
     notificationIcon: "mdi-bell",
-    authStatus: false
+    userStatus: false,
+    userEmail: "",
   }),
   mounted() {
     this.getWindowHeight();
+    this.setUserEmail();
   },
   methods: {
+    setUserEmail: function() {
+      let currentUser = firebase.auth().currentUser;
+      if(currentUser != null) {
+        this.userEmail = this.$store.state.user.data.email;
+        this.userStatus = this.$store.state.user.loggedIn;
+      }
+    },
     getWindowHeight: function() {
       this.windowHeight = window.innerHeight;
     },
@@ -94,13 +102,10 @@ export default {
       this.drawer = false;
       this.$router.push("/login");
     },
-    userInfo: function(result) {
-      console.log(result);
-      this.authStatus = true;
-      this.userEmail = result.email;
-    },
     logout: function() {
       this.drawer = false;
+      this.userStatus = false;
+      this.userEmail = "Logout";
       firebase
         .auth()
         .signOut()
@@ -109,8 +114,11 @@ export default {
         .catch(function(error) {
           alert(error);
         });
-      this.userEmail = "Logout";
     }
+  },
+  watch: {
+    userEmail: function() {},
+    userStatus: function() {},
   }
 };
 </script>

@@ -79,31 +79,26 @@ export default {
         .auth()
         .signInWithEmailAndPassword(this.userEmail, this.userPassword)
         .then(
-          function(result) {
-            return result;
+          function(user) {
+            return user;
           },
           function(error) {
-            console.log(error);
-            this.loginErrorAlert = true;
-            setTimeout(() => {
-              this.loginErrorAlert = false;
-            }, 2000);
+            return error;
           }
         );
 
-      console.log(result);
-
-      if (result != null) {
-        this.$emit("userInfo", result.user);
+      
+      if (!result.message) {
+        console.log(result.user);
+        this.$emit("setUserEmail");
+        this.$router.push("/");
+      } else {
+        console.log(result.message);
+        this.loginErrorAlert = true;
+        setTimeout(() => {
+          this.loginErrorAlert = false;
+        }, 2000);
       }
-      // if (!result) {
-      //   this.loginErrorAlert = true;
-      //   setTimeout(() => {
-      //     this.loginErrorAlert = false;
-      //   }, 2000);
-      // } else {
-      //   this.$router.push("/");
-      // }
     }
   }
 };

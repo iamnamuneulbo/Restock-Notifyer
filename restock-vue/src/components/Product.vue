@@ -9,10 +9,11 @@
 <script>
 import InsertProduct from "../components/InsertProduct";
 import ProductTable from "../components/ProductTable";
+import firebase from "firebase";
 
 export default {
   name: "Product",
-  props: {},
+  props: ["userId"],
   components: {
     InsertProduct,
     ProductTable
@@ -45,7 +46,7 @@ export default {
           dialog: false
         }
       ],
-      insertedUrl: null,
+      insertedUrl: null
     };
   },
   methods: {
@@ -64,13 +65,28 @@ export default {
         prdName: this.insertedUrl,
         dialog: false
       });
-    },
+    }
+  },
+  created() {
+    let database = firebase.database();
+    let userId = firebase.auth().currentUser.uid;
+    let ref = database.ref();
+
+    console.log(ref.child('product'));
+    ref.child('product').orderByChild("userId").equalTo(userId).on(
+      "value",
+      function(snapshot) {
+        console.log(snapshot.val());
+      },
+      function(errorObject) {
+        console.log("The read failed: " + errorObject.code);
+      }
+    );
+
+    // instance.get("/product").then(response => (this.products = response.data));
+    // this.$store.commit("getGoodsModel", this.$route.params.goodsCode);
+    // this.$store.commit("loadCommentByGoodsCode", this.$route.params.goodsCode);
   }
-  // created: {
-  // instance.get("/product").then(response => (this.products = response.data));
-  // this.$store.commit("getGoodsModel", this.$route.params.goodsCode);
-  // this.$store.commit("loadCommentByGoodsCode", this.$route.params.goodsCode);
-  // },
   // computed: {
   //   getGoodsData() {
   //     let goodsData = this.$store.state.goodsStore.goodsModel;
