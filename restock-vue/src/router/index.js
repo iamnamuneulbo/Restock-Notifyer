@@ -2,6 +2,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Product from "../components/Product";
 import LoginForm from '../components/LoginForm'
+import SignUpForm from '../components/SignUpForm'
 
 Vue.use(VueRouter)
 
@@ -23,6 +24,11 @@ const routes = [
         path: '/login',
         name: 'LoginForm',
         component: LoginForm
+    },
+    {
+        path: '/signup',
+        name: 'SignUpForm',
+        component: SignUpForm
     }
 ]
 

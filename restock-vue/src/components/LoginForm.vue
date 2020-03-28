@@ -7,7 +7,7 @@
         </v-toolbar>
         <v-card-text>
           <v-form>
-            <v-text-field label="ID" name="login" prepend-icon="person" type="text" />
+            <v-text-field label="E-mail" name="login" prepend-icon="person" type="text" />
             <v-text-field
               id="password"
               label="Password"
@@ -18,6 +18,7 @@
           </v-form>
         </v-card-text>
         <v-card-actions>
+          <v-btn color="light-blue lighten-1 white--text" @click="goToSignUpPage">Sign Up</v-btn>
           <v-spacer />
           <v-btn color="light-blue lighten-1 white--text">Login</v-btn>
         </v-card-actions>
@@ -31,6 +32,13 @@ export default {
   name: "LoginForm",
   props: {
     source: String
+  },
+  data() {
+  },
+  methods: {
+    goToSignUpPage: function() {
+      this.$router.push("/signup");
+    },
   }
 };
 </script>
