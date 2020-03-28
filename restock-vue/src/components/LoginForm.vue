@@ -6,13 +6,14 @@
           <v-toolbar-title>Login</v-toolbar-title>
         </v-toolbar>
         <v-card-text>
-          <v-form autocomplete="on">
+          <v-form autocomplete="on" v-model="valid">
             <v-text-field
               label="E-mail"
               name="login"
               prepend-icon="person"
               type="text"
               v-model="userEmail"
+              :rules="emailRules"
               @keydown.enter="loginRequest"
             />
             <v-text-field
@@ -22,9 +23,15 @@
               prepend-icon="lock"
               type="password"
               v-model="userPassword"
+              :rules="passwordRules"
               @keydown.enter="loginRequest"
             />
           </v-form>
+        </v-card-text>
+        <v-card-text class="py-0" style="height: 72px">
+          <v-slide-y-transition>
+            <v-alert type="error" v-if="loginErrorAlert">로그인 실패</v-alert>
+          </v-slide-y-transition>
         </v-card-text>
         <v-card-actions>
           <v-btn color="light-blue lighten-1 white--text" @click="goToSignUpPage">Sign Up</v-btn>
@@ -46,8 +53,21 @@ export default {
   },
   data() {
     return {
+      valid: true,
       userEmail: "",
-      userPassword: ""
+      userPassword: "",
+      loginErrorAlert: false,
+
+      emailRules: [
+        v => !!v || "E-mail is required",
+        v => /.+@.+/.test(v) || "E-mail must be valid"
+      ],
+      passwordRules: [
+        v => !!v || "Password is required",
+        v =>
+          /^(?=.*[a-z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,})/.test(v) ||
+          "Min. 8 characters with at least one capital letter, a number and a special character."
+      ]
     };
   },
   methods: {
@@ -55,21 +75,35 @@ export default {
       this.$router.push("/signup");
     },
     loginRequest: async function() {
-      let path = "";
-      await firebase
+      let result = await firebase
         .auth()
         .signInWithEmailAndPassword(this.userEmail, this.userPassword)
         .then(
-          function() {
-            path = "/";
-            alert("로그인 완료");
+          function(result) {
+            return result;
           },
-          function(err) {
-            path = "/login"
-            alert("에러 : " + err.message);
+          function(error) {
+            console.log(error);
+            this.loginErrorAlert = true;
+            setTimeout(() => {
+              this.loginErrorAlert = false;
+            }, 2000);
           }
         );
-      this.$router.push(path);
+
+      console.log(result);
+
+      if (result != null) {
+        this.$emit("userInfo", result.user);
+      }
+      // if (!result) {
+      //   this.loginErrorAlert = true;
+      //   setTimeout(() => {
+      //     this.loginErrorAlert = false;
+      //   }, 2000);
+      // } else {
+      //   this.$router.push("/");
+      // }
     }
   }
 };
