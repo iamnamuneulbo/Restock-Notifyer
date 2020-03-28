@@ -6,7 +6,7 @@
           <v-toolbar-title>Sign Up</v-toolbar-title>
         </v-toolbar>
         <v-card-text>
-          <v-form ref="form" v-model="valid" lazy-validation>
+          <v-form v-model="valid">
             <v-text-field
               label="E-mail"
               prepend-icon="person"
@@ -70,7 +70,7 @@ export default {
       ],
       passwordRules: [
         v => !!v || 'Password is required',
-        v => /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,})/.test(v) || "Min. 8 characters with at least one capital letter, a number and a special character.",
+        v => /^(?=.*[a-z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,})/.test(v) || "Min. 8 characters with at least one capital letter, a number and a special character.",
       ],
       passwordCheckRules: [
         v => !!v || "Password is required",
@@ -82,7 +82,7 @@ export default {
     goToSignUpPage: function() {
       this.$refs.form.validate();
       this.drawer = false;
-      // this.$router.push("/login");
+      this.$router.push("/signuprequest");
     }
   },
 };
