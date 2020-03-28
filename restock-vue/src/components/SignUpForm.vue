@@ -43,7 +43,7 @@
         </v-card-text>
         <v-card-actions>
           <v-spacer />
-          <v-btn color="light-blue lighten-1 white--text" @click="goToSignUpPage">Sign Up</v-btn>
+          <v-btn color="light-blue lighten-1 white--text" @click="signUpRequest">Sign Up</v-btn>
         </v-card-actions>
       </v-card>
     </v-col>
@@ -51,6 +51,8 @@
 </template>
 
 <script>
+import firebase from "firebase";
+
 export default {
   name: "SignUpForm",
   props: {
@@ -66,25 +68,41 @@ export default {
 
       emailRules: [
         v => !!v || "E-mail is required",
-        v => /.+@.+/.test(v) || "E-mail must be valid",
+        v => /.+@.+/.test(v) || "E-mail must be valid"
       ],
       passwordRules: [
-        v => !!v || 'Password is required',
-        v => /^(?=.*[a-z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,})/.test(v) || "Min. 8 characters with at least one capital letter, a number and a special character.",
+        v => !!v || "Password is required",
+        v =>
+          /^(?=.*[a-z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,})/.test(v) ||
+          "Min. 8 characters with at least one capital letter, a number and a special character."
       ],
       passwordCheckRules: [
         v => !!v || "Password is required",
-        v => this.userPassword === v || "Password must be valid",
-      ],
+        v => this.userPassword === v || "Password must be valid"
+      ]
     };
   },
   methods: {
-    goToSignUpPage: function() {
+    formValidate() {
       this.$refs.form.validate();
-      this.drawer = false;
-      this.$router.push("/signuprequest");
+    },
+    signUpRequest: function() {
+      if (this.valid) {
+        firebase
+          .auth()
+          .createUserWithEmailAndPassword(this.userEmail, this.userPassword)
+          .then(
+            function(user) {
+              alert(user + "회원가입 완료!");
+              this.$router.push("/login");
+            },
+            function(err) {
+              alert("에러 : " + err.message);
+            }
+          );
+      }
     }
-  },
+  }
 };
 </script>
 
