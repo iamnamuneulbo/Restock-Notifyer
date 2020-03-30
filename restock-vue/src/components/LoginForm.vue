@@ -10,7 +10,7 @@
             <v-text-field
               label="E-mail"
               name="login"
-              prepend-icon="person"
+              prepend-icon="mdi-account"
               type="text"
               v-model="userEmail"
               :rules="emailRules"
@@ -20,7 +20,7 @@
               id="password"
               label="Password"
               name="password"
-              prepend-icon="lock"
+              prepend-icon="mdi-lock"
               type="password"
               v-model="userPassword"
               :rules="passwordRules"

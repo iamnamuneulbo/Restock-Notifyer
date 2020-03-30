@@ -9,14 +9,14 @@
           <v-form v-model="valid">
             <v-text-field
               label="E-mail"
-              prepend-icon="person"
+              prepend-icon="mdi-account"
               v-model="userEmail"
               :rules="emailRules"
               required
             ></v-text-field>
             <v-text-field
               label="Password"
-              prepend-icon="lock"
+              prepend-icon="mdi-lock"
               type="password"
               v-model="userPassword"
               :rules="passwordRules"
@@ -26,7 +26,7 @@
               id="password-check"
               label="Password Check"
               name="password-check"
-              prepend-icon="lock"
+              prepend-icon="mdi-lock"
               type="password"
               v-model="passwordCheck"
               :rules="passwordCheckRules"
