@@ -47,7 +47,7 @@
         <v-container fluid>
           <v-row align="center" justify="center">
             <v-col>
-              <router-view v-on:setUserEmail="setUserEmail" :userEmail="userEmail"/>
+              <router-view />
             </v-col>
           </v-row>
         </v-container>
@@ -55,7 +55,7 @@
     </v-content>
     <v-footer color="light-blue" app>
       <div class="footer">
-        <span class="user-email white--text">{{userEmail}}</span>
+        <span class="user-info white--text">{{userId}}</span>
         <span class="year white--text text-right">&copy; {{ new Date().getFullYear() }}</span>
       </div>
     </v-footer>
@@ -63,8 +63,6 @@
 </template>
 
 <script>
-import firebase from "firebase";
-
 export default {
   name: "App",
 
@@ -77,17 +75,17 @@ export default {
     drawer: false,
     notificationIcon: "mdi-bell",
     userStatus: false,
-    userEmail: "",
+    userId: ""
   }),
   mounted() {
     this.getWindowHeight();
-    this.setUserEmail();
+    this.setUserId();
   },
   methods: {
-    setUserEmail: function() {
+    setUserId: function() {
       let currentUser = firebase.auth().currentUser;
-      if(currentUser != null) {
-        this.userEmail = this.$store.state.user.data.email;
+      if (currentUser != null) {
+        this.userId = this.$store.state.user.data.uid;
         this.userStatus = this.$store.state.user.loggedIn;
       }
     },
@@ -105,20 +103,19 @@ export default {
     logout: function() {
       this.drawer = false;
       this.userStatus = false;
-      this.userEmail = "Logout";
+      this.userId = "Logout";
       firebase
         .auth()
         .signOut()
-        .then(function() {
-        })
+        .then(function() {})
         .catch(function(error) {
           alert(error);
         });
     }
   },
   watch: {
-    userEmail: function() {},
-    userStatus: function() {},
+    userId: function() {},
+    userStatus: function() {}
   }
 };
 </script>
@@ -127,7 +124,7 @@ export default {
 footer {
   display: block !important;
 }
-.user-email {
+.user-info {
   float: left;
 }
 .year {
