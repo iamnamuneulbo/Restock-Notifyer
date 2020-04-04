@@ -44,7 +44,8 @@
 </template>
 
 <script>
-import firebase from "firebase";
+import firebase from "firebase/app";
+import "firebase/auth";
 
 export default {
   name: "LoginForm",
@@ -79,8 +80,8 @@ export default {
       firebase
         .auth()
         .signInWithEmailAndPassword(this.userEmail, this.userPassword)
-        .then(data => {
-          this.$router.push("/");
+        .then(() => {
+          this.$router.push("/product");
         })
         .catch(err => {
           let message;
