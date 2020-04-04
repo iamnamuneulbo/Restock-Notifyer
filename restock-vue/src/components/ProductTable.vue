@@ -4,7 +4,15 @@
       <v-col cols="12">
         <v-simple-table id="product-table">
           <template v-slot:default>
-            <thead>
+            <thead v-if="products.length == 0" class="progress">
+              <v-progress-circular indeterminate color="light-blue"></v-progress-circular>
+            </thead>
+            <!-- <thead class="progress">
+              <v-slide-y-transition>
+                <v-alert type="warning">등록된 상품이 없습니다. 상품을 추가해주세요.</v-alert>
+              </v-slide-y-transition>
+            </thead> -->
+            <thead v-else>
               <tr>
                 <th class="text-left">#</th>
                 <th class="text-left">상품 이미지</th>
@@ -14,7 +22,7 @@
             </thead>
             <tbody id="product-rows">
               <tr v-for="(product, index) in products" :key="index">
-                <th scope="row">{{ product.prdId }}</th>
+                <th scope="row">{{ product.prdNo }}</th>
                 <td>
                   <img :src="product.prdImg" width="100%" />
                 </td>
@@ -70,17 +78,13 @@ export default {
     };
   },
   methods: {
-    removeEvent: function(product) {
+    removeEvent(product) {
       product.dialog = false;
       let index = this.products.indexOf(product);
       this.products.splice(index, 1);
       //delete 요청
+      this.$emit("deleteProduct", product.uuid);
     }
-  },
-  watch: {
-    // products: function() {
-    //   this.addProduct(this.products);
-    // }
   }
 };
 </script>
@@ -89,6 +93,10 @@ export default {
 a {
   text-decoration: none;
   color: black;
+}
+
+.progress {
+  text-align: center;
 }
 
 /*
