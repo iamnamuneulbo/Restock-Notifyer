@@ -28,9 +28,9 @@
             />
           </v-form>
         </v-card-text>
-        <v-card-text class="py-0" style="height: 72px">
+        <v-card-text class="py-0">
           <v-slide-y-transition>
-            <v-alert type="error" v-if="loginErrorAlert">로그인 실패</v-alert>
+            <v-alert type="error" v-if="loginErrorAlert">{{errorMessage}}</v-alert>
           </v-slide-y-transition>
         </v-card-text>
         <v-card-actions>
@@ -57,6 +57,7 @@ export default {
       userEmail: "",
       userPassword: "",
       loginErrorAlert: false,
+      errorMessage: "",
 
       emailRules: [
         v => !!v || "E-mail is required",
@@ -71,34 +72,40 @@ export default {
     };
   },
   methods: {
-    goToSignUpPage: function() {
+    goToSignUpPage() {
       this.$router.push("/signup");
     },
-    loginRequest: async function() {
-      let result = await firebase
+    loginRequest() {
+      firebase
         .auth()
         .signInWithEmailAndPassword(this.userEmail, this.userPassword)
-        .then(
-          function(user) {
-            return user;
-          },
-          function(error) {
-            return error;
+        .then(data => {
+          this.$router.push("/");
+        })
+        .catch(err => {
+          let message;
+          
+          switch (err.code) {
+            case "auth/invalid-email":
+              message = "유효하지 않은 메일입니다";
+              break;
+            case "auth/user-disabled":
+              message = "정지된 사용자 입니다.";
+              break;
+            case "auth/user-not-found":
+              message = "사용자를 찾을 수 없습니다.";
+              break;
+            case "auth/wrong-password":
+              message = "잘못된 패스워드 입니다.";
+              break;
           }
-        );
 
-      
-      if (!result.message) {
-        console.log(result.user);
-        this.$emit("setUserEmail");
-        this.$router.push("/");
-      } else {
-        console.log(result.message);
-        this.loginErrorAlert = true;
-        setTimeout(() => {
-          this.loginErrorAlert = false;
-        }, 2000);
-      }
+          this.errorMessage = message;
+          this.loginErrorAlert = true;
+          setTimeout(() => {
+            this.loginErrorAlert = false;
+          }, 2000);
+        });
     }
   }
 };
