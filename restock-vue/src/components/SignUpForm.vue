@@ -86,20 +86,24 @@ export default {
     formValidate() {
       this.$refs.form.validate();
     },
-    signUpRequest: function() {
+    async signUpRequest() {
       if (this.valid) {
-        firebase
+        let link = "/login";
+
+        await firebase
           .auth()
           .createUserWithEmailAndPassword(this.userEmail, this.userPassword)
           .then(
-            function(user) {
-              alert(user + "회원가입 완료!");
-              this.$router.push("/login");
+            function() {
+              alert("회원가입 성공")
             },
             function(err) {
-              alert("에러 : " + err.message);
+              link = "/signup";
+              alert(err.message);
             }
           );
+
+        this.$router.push(link);
       }
     }
   }
