@@ -11,7 +11,16 @@
           </v-list-item-content>
         </v-list-item>
 
-        <v-list-item link @click="logout" v-if="userStatus">
+        <v-list-item link @click="goToProductPage" v-if="userId != ''">
+          <v-list-item-action>
+            <v-icon>mdi-format-list-numbered</v-icon>
+          </v-list-item-action>
+          <v-list-item-content>
+            <v-list-item-title>My List</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+
+        <v-list-item link @click="logoutRequest" v-if="userStatus">
           <v-list-item-action>
             <v-icon>mdi-logout</v-icon>
           </v-list-item-action>
@@ -40,8 +49,9 @@
       dark
     >
       <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
-      <v-toolbar-title>재입고 알림 서비스</v-toolbar-title>
+      <v-toolbar-title @click="goToMainPage">재입고 알림 서비스</v-toolbar-title>
     </v-app-bar>
+
     <v-content>
       <v-sheet id="scrolling-techniques-7" class="overflow-y-auto" :max-height="windowHeight - 100">
         <v-container fluid>
@@ -53,6 +63,7 @@
         </v-container>
       </v-sheet>
     </v-content>
+
     <v-footer color="light-blue" app>
       <div class="footer">
         <span class="user-info white--text">{{userId}}</span>
@@ -63,6 +74,8 @@
 </template>
 
 <script>
+import firebase from "firebase";
+
 export default {
   name: "App",
 
@@ -77,45 +90,54 @@ export default {
     userStatus: false,
     userId: ""
   }),
-  mounted() {
-    this.getWindowHeight();
-    this.setUserId();
-  },
   methods: {
-    setUserId: function() {
-      let currentUser = firebase.auth().currentUser;
-      if (currentUser != null) {
-        this.userId = this.$store.state.user.data.uid;
-        this.userStatus = this.$store.state.user.loggedIn;
-      }
+    setUserState() {
+      firebase.auth().onAuthStateChanged(user => {
+        if (user) {
+          this.userId = user.email;
+          this.userStatus = true;
+        }
+      });
     },
-    getWindowHeight: function() {
+    getWindowHeight() {
       this.windowHeight = window.innerHeight;
     },
-    goToMainPage: function() {
+    goToMainPage() {
       this.drawer = false;
       this.$router.push("/");
     },
-    goToLoginPage: function() {
+    goToProductPage() {
+      this.drawer = false;
+      this.$router.push("/product");
+    },
+    goToLoginPage() {
       this.drawer = false;
       this.$router.push("/login");
     },
-    logout: function() {
+    logoutRequest() {
       this.drawer = false;
       this.userStatus = false;
-      this.userId = "Logout";
+      this.userId = "";
+
       firebase
         .auth()
         .signOut()
-        .then(function() {})
-        .catch(function(error) {
+        .then(() => {})
+        .catch(error => {
           alert(error);
         });
     }
   },
+  mounted() {
+    this.getWindowHeight();
+    this.setUserState();
+  },
   watch: {
-    userId: function() {},
-    userStatus: function() {}
+    userId() {},
+    userStatus() {},
+    $router() {
+      this.setUserState();
+    }
   }
 };
 </script>
