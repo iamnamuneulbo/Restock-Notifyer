@@ -88,22 +88,19 @@ export default {
     },
     async signUpRequest() {
       if (this.valid) {
-        let link = "/login";
-
         await firebase
           .auth()
           .createUserWithEmailAndPassword(this.userEmail, this.userPassword)
           .then(
-            function() {
-              alert("회원가입 성공")
+            () => {
+              alert("회원가입 성공");
+              this.$router.push("/login");
             },
-            function(err) {
-              link = "/signup";
+            err => {
               alert(err.message);
+              this.$router.push("/signup");
             }
           );
-
-        this.$router.push(link);
       }
     }
   }
