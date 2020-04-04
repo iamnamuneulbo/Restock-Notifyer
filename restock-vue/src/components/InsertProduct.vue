@@ -19,7 +19,7 @@
             id="url-input"
             clearable
             label="상품 URL 입력"
-            hint="www.example.com"
+            hint="http://www.example.com"
             persistent-hint
             v-model="prdUrl"
             @keydown.enter="requestInsert"
